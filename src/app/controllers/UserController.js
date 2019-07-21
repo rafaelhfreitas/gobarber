@@ -10,7 +10,7 @@ class UserController {
                 .required(),
             password: Yup.string()
                 .required()
-                .min(6)
+                .min(6),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -18,7 +18,7 @@ class UserController {
         }
 
         const userExists = await User.findOne({
-            where: { email: req.body.email }
+            where: { email: req.body.email },
         });
 
         if (userExists) {
@@ -29,7 +29,7 @@ class UserController {
             id,
             name,
             email,
-            provider
+            provider,
         });
     }
 
@@ -45,7 +45,7 @@ class UserController {
                 ),
             confirmPassword: Yup.string().when('password', (password, field) =>
                 password ? field.required().oneOf([Yup.ref('password')]) : field
-            )
+            ),
         });
 
         if (!(await schema.isValid(req.body))) {
@@ -58,7 +58,7 @@ class UserController {
 
         if (email !== user.email) {
             const userExists = await User.findOne({
-                where: { email: req.body.email }
+                where: { email: req.body.email },
             });
 
             if (userExists) {
@@ -76,7 +76,7 @@ class UserController {
             id,
             name,
             email,
-            provider
+            provider,
         });
     }
 }
